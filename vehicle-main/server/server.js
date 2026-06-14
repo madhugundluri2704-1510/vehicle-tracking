@@ -88,13 +88,6 @@ const startServer = async () => {
   try {
     await connectDB();
     
-    // Seed database on first run
-    const Vehicle = require('./models/Vehicle');
-    const count = await Vehicle.countDocuments();
-    if (count === 0) {
-      await seedDatabase();
-    }
-
     // Initialize Socket.IO
     initializeSocket(io);
 
@@ -103,6 +96,22 @@ const startServer = async () => {
       console.log(`📡 Socket.IO ready for real-time tracking`);
       console.log(`🌐 API: http://localhost:${PORT}/api`);
       console.log(`❤️  Health: http://localhost:${PORT}/api/health\n`);
+
+      // Seed database asynchronously in the background on first run
+      const Vehicle = require('./models/Vehicle');
+      Vehicle.countDocuments()
+        .then(count => {
+          if (count === 0) {
+            console.log('🌱 Starting Kurnool Municipal Corporation database seed in the background...');
+            return seedDatabase();
+          }
+        })
+        .then(() => {
+          console.log('✅ Database seeding completed successfully.');
+        })
+        .catch(error => {
+          console.error('❌ Database seeding failed:', error.message);
+        });
     });
   } catch (error) {
     console.error('Failed to start server:', error);
