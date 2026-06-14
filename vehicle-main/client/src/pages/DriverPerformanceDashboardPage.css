@@ -1,0 +1,117 @@
+.performance-page {
+  padding: var(--space-lg);
+  animation: fadeIn var(--transition-base);
+}
+
+.performance-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.performance-chart-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.chart-card {
+  min-height: 420px;
+}
+
+.chart-wrapper {
+  margin-top: var(--space-md);
+  padding: var(--space-sm);
+}
+
+/* Scorecard Console */
+.scorecard-card {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scorecard-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.radar-wrapper {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  padding: var(--space-xs);
+}
+
+.scorecard-details h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.scorecard-sub {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-xs);
+}
+
+.score-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 4px;
+}
+
+.score-row strong {
+  color: var(--text-primary);
+}
+
+.score-row.highlight {
+  border-bottom: none;
+  background: var(--bg-hover);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-xs);
+}
+
+.score-row.highlight span {
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.perf-text {
+  font-size: 1.15rem;
+  color: var(--accent-primary) !important;
+  font-weight: 800;
+}
+
+@media (max-width: 992px) {
+  .performance-chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .scorecard-grid {
+    grid-template-columns: 1fr;
+  }
+}

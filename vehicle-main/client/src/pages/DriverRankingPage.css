@@ -1,0 +1,213 @@
+.ranking-page {
+  padding: var(--space-lg);
+  animation: fadeIn var(--transition-base);
+}
+
+.ranking-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.ranking-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.filter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Podium Layout */
+.podium-section {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: var(--space-lg);
+  align-items: end;
+  margin-bottom: var(--space-xl);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.podium-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+}
+
+.podium-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.podium-card.gold {
+  height: 280px;
+  border-color: #fbbf24;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.15);
+}
+
+.podium-card.silver {
+  height: 240px;
+  border-color: #94a3b8;
+}
+
+.podium-card.bronze {
+  height: 220px;
+  border-color: #ca8a04;
+}
+
+.crown-icon {
+  position: absolute;
+  top: -24px;
+  font-size: 2rem;
+  color: #fbbf24;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.podium-rank {
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-secondary);
+}
+
+.gold-trophy { color: #fbbf24; font-size: 1.1rem; }
+.silver-medal { color: #94a3b8; font-size: 1.1rem; }
+.bronze-medal { color: #ca8a04; font-size: 1.1rem; }
+
+.podium-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-md) 0 var(--space-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.podium-card.gold .podium-avatar {
+  width: 68px;
+  height: 68px;
+  font-size: 1.85rem;
+}
+
+.podium-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.podium-score {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.podium-details {
+  display: flex;
+  gap: var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-xs);
+  width: 100%;
+  justify-content: center;
+}
+
+/* Leaderboard standings table */
+.leaderboard-card {
+  margin-top: var(--space-md);
+}
+
+.row-highlight {
+  background: rgba(5, 150, 105, 0.02);
+}
+
+.rank-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.rank-pill.top-1 { background: #fbbf24; color: #000; }
+.rank-pill.top-2 { background: #e2e8f0; color: #000; }
+.rank-pill.top-3 { background: #f59e0b; color: #fff; }
+
+.perf-badge {
+  font-size: 0.9rem;
+  color: var(--accent-primary);
+}
+
+.score-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.indicator-pill {
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.indicator-pill.green {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+@media (max-width: 768px) {
+  .podium-section {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .podium-card.gold, .podium-card.silver, .podium-card.bronze {
+    height: auto;
+  }
+  .ranking-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ranking-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

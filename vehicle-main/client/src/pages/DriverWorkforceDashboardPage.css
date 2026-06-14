@@ -1,0 +1,213 @@
+.workforce-page {
+  padding: var(--space-lg);
+  animation: fadeIn var(--transition-base);
+}
+
+.workforce-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+/* AI Forecasting Panel */
+.ai-card {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.15) 0%, rgba(13, 148, 136, 0.1) 100%);
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--space-lg);
+}
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.ai-stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ai-stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ai-stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: var(--space-xs) 0;
+}
+
+.ai-stat-value.text-red { color: var(--danger); }
+.ai-stat-value.text-green { color: var(--success); }
+.ai-stat-value.text-yellow { color: var(--warning); }
+
+.ai-stat-desc {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+}
+
+.ai-insights h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+}
+
+.ai-insights ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.ai-insights li {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.ai-insights li::before {
+  content: '✦';
+  color: var(--accent-primary);
+  font-weight: bold;
+}
+
+/* Layout Grid: Roster vs Timeline */
+.workforce-layout-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.roster-card {
+  min-height: 400px;
+}
+
+/* Timeline Panel */
+.timeline-card {
+  min-height: 400px;
+}
+
+.timeline-driver-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-xs);
+  color: var(--accent-primary);
+}
+
+.timeline-wrapper {
+  padding-left: 8px;
+}
+
+.timeline-items {
+  position: relative;
+  border-left: 2px solid var(--border-color);
+  padding-left: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-badge {
+  position: absolute;
+  top: 6px;
+  left: calc(var(--space-lg) * -1 - 6px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  border: 2px solid var(--bg-secondary);
+  z-index: 2;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+}
+
+.timeline-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.timeline-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.timeline-loc {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  margin-top: var(--space-xs);
+}
+
+/* Status tag pills */
+.status-tag {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+}
+
+.status-on-duty {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.status-driving {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0ea5e9;
+}
+
+.status-break {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.status-overtime {
+  background: var(--danger-bg);
+  color: var(--danger);
+  animation: pulse 2s infinite;
+}
+
+.status-off-duty {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 992px) {
+  .ai-grid {
+    grid-template-columns: 1fr;
+  }
+  .workforce-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,129 @@
+.reports-page {
+  padding: var(--space-lg);
+  animation: fadeIn var(--transition-base);
+}
+
+.filter-card {
+  margin-bottom: var(--space-lg);
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.filter-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--space-md);
+}
+
+.filter-submit-btn {
+  align-self: flex-end;
+  min-width: 160px;
+}
+
+.export-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.export-buttons .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+/* Colors for specific files */
+.text-red { color: #ef4444 !important; }
+.text-green { color: #10b981 !important; }
+.text-blue { color: #0ea5e9 !important; }
+
+/* Hidden by default on screen */
+.print-header-only {
+  display: none;
+}
+
+/* Print layout rules */
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 10pt;
+  }
+  .sidebar, .header, .no-print, .btn, .search-bar, .theme-toggle-btn, .logout-btn, .sidebar-toggle {
+    display: none !important;
+  }
+  .app-layout {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .app-main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+  .app-content {
+    padding: 0 !important;
+  }
+  .reports-page {
+    padding: 0;
+  }
+  .card {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+  }
+  .data-table-wrapper {
+    border: none;
+    overflow: visible;
+  }
+  .data-table th {
+    background-color: #f1f5f9 !important;
+    color: black !important;
+    border-bottom: 2px solid #000;
+  }
+  .data-table td {
+    border-bottom: 1px solid #ddd;
+    color: black !important;
+  }
+  .print-header-only {
+    display: block !important;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .print-header-only h1 {
+    font-size: 18pt;
+    margin-bottom: 2px;
+  }
+  .print-header-only h2 {
+    font-size: 12pt;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+  .print-header-only p {
+    font-size: 8pt;
+    color: #444;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-submit-btn {
+    align-self: stretch;
+    width: 100%;
+  }
+  .export-buttons {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .export-buttons .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}

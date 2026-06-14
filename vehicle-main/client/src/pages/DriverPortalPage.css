@@ -1,0 +1,188 @@
+.driver-portal {
+  padding: var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.portal-header {
+  margin-bottom: var(--space-xl);
+}
+.portal-header h1 {
+  font-size: 2rem;
+  color: #10b981;
+  margin-bottom: var(--space-xs);
+}
+.portal-header p {
+  color: var(--text-secondary);
+}
+
+.portal-loading, .portal-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+.portal-error {
+  color: #ef4444;
+}
+
+.profile-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-lg);
+  background: var(--surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.profile-card h3 {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-xs);
+}
+.profile-card p {
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+}
+.profile-card strong {
+  color: var(--text-secondary);
+  margin-right: var(--space-xs);
+}
+
+.shift-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+.shift-badge.morning { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.shift-badge.afternoon { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.shift-badge.night { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+
+.overall-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.1);
+}
+.score-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #10b981;
+}
+.score-max {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-left: 2px;
+  margin-top: 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+.stat-card {
+  background: var(--surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  transition: transform 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+.stat-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+}
+.stat-details h4 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.stat-details p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.chart-section {
+  background: var(--surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+.chart-section h3 {
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+.chart-container {
+  height: 300px;
+}
+
+.logs-section {
+  background: var(--surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+}
+.logs-section h3 {
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.logs-table th, .logs-table td {
+  padding: var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.logs-table th {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.score-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+.score-badge.good { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.score-badge.avg { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+.score-badge.poor { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.text-center { text-align: center !important; }

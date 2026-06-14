@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: kmc-swachth-track
+    env: node
+    plan: free
+    rootDir: vehicle-main
+    buildCommand: npm run render-build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false # Populate with your deployed service URL (e.g. https://kmc-swachth-track.onrender.com)
+      - key: MONGODB_URI
+        sync: false # Populate with your MongoDB Atlas connection URI (if left blank, defaults to in-memory database)
