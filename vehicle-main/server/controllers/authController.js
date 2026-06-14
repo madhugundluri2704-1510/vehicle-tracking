@@ -12,7 +12,7 @@ const generateRefreshToken = (id) => {
 
 exports.register = async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role: role || 'user'
+      role: 'operator' // Secure default role; do not accept arbitrary roles
     });
 
     const token = generateToken(user._id);

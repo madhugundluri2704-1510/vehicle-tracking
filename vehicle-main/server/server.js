@@ -84,9 +84,36 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000;
 
+const ensureAdminUser = async () => {
+  try {
+    const User = require('./models/User');
+    const adminExists = await User.findOne({ email: 'admin@kmc.gov.in' });
+    if (!adminExists) {
+      console.log('👤 Admin user not found. Creating default admin...');
+      const bcrypt = require('bcryptjs');
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash('admin123', salt);
+      await User.create({
+        username: 'KMC Admin',
+        email: 'admin@kmc.gov.in',
+        password: hashedPassword,
+        role: 'admin',
+        department: 'Sanitation',
+        employeeId: 'KMC-001'
+      });
+      console.log('👤 Default admin user created successfully!');
+    } else {
+      console.log('👤 Default admin user already exists.');
+    }
+  } catch (error) {
+    console.error('❌ Failed to ensure admin user:', error.message);
+  }
+};
+
 const startServer = async () => {
   try {
     await connectDB();
+    await ensureAdminUser();
     
     // Initialize Socket.IO
     initializeSocket(io);
