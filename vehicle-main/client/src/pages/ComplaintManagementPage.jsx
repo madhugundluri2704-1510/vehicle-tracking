@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import useSocket from '../hooks/useSocket';
+import useAuthStore from '../store/useAuthStore';
 import './ComplaintManagementPage.css';
 
 export default function ComplaintManagementPage() {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const { socket } = useSocket();
+  const { user } = useAuthStore();
 
   useEffect(() => {
     fetchComplaints();
@@ -36,8 +38,7 @@ export default function ComplaintManagementPage() {
 
   const fetchComplaints = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-      const res = await axios.get(`${API_URL}/complaints`);
+      const res = await api.get(`/complaints`);
       setComplaints(res.data.complaints);
       setLoading(false);
     } catch (error) {
@@ -48,8 +49,7 @@ export default function ComplaintManagementPage() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-      await axios.put(`${API_URL}/complaints/${id}/status`, { status: newStatus });
+      await api.put(`/complaints/${id}/status`, { status: newStatus });
       // update will happen via socket
     } catch (error) {
       console.error("Error updating status", error);
@@ -121,7 +121,7 @@ export default function ComplaintManagementPage() {
                         value={c.status} 
                         onChange={(e) => handleStatusChange(c._id, e.target.value)}
                         className="status-select"
-                        disabled={c.status === 'Completed'}
+                        disabled={user?.role !== 'admin' || c.status === 'Completed'}
                       >
                         <option value="Pending">Pending</option>
                         <option value="Assigned">Assigned</option>

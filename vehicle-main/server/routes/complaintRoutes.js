@@ -6,15 +6,17 @@ const {
   updateComplaintStatus,
   getStats
 } = require('../controllers/complaintController');
+const { protect } = require('../middleware/auth');
+const { roleCheck } = require('../middleware/roleCheck');
 
 router.route('/')
   .post(createComplaint)
-  .get(getComplaints);
+  .get(protect, getComplaints);
 
 router.route('/stats')
-  .get(getStats);
+  .get(protect, getStats);
 
 router.route('/:id/status')
-  .put(updateComplaintStatus);
+  .put(protect, roleCheck('admin'), updateComplaintStatus);
 
 module.exports = router;

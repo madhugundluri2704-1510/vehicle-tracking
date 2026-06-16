@@ -5,7 +5,7 @@ const Driver = require('../models/Driver');
 const Attendance = require('../models/Attendance');
 const DriverActivity = require('../models/DriverActivity');
 const Complaint = require('../models/Complaint');
-const { assignNearestVehicle, optimizeReturnRoute } = require('../utils/assignmentEngine');
+const { assignNearestVehicle, optimizeReturnRoute, getDistance } = require('../utils/assignmentEngine');
 
 const cleaningZones = ['Zone 1','Zone 2','Zone 3','Zone 4','Zone 5','Zone 6','Zone 7','Zone 8','Zone 9','Zone 10'];
 let simulationInterval = null;
@@ -54,6 +54,27 @@ const startSimulation = (io) => {
         // Try to optimize return route if returning
         if (vehicle.status === 'returning') {
           await optimizeReturnRoute(vehicle, io);
+        }
+
+        // Auto-complete assigned tasks simulation
+        if (vehicle.currentTask) {
+          const complaint = await Complaint.findById(vehicle.currentTask);
+          if (complaint && (complaint.status === 'Assigned' || complaint.status === 'In Progress')) {
+            const distance = getDistance(
+              vehicle.currentLocation.lat, vehicle.currentLocation.lng,
+              complaint.location.lat, complaint.location.lng
+            );
+            // If vehicle is within 0.5km OR just randomly complete it (10% chance)
+            if (distance < 0.5 || Math.random() > 0.9) {
+              complaint.status = 'Completed';
+              complaint.resolvedAt = new Date();
+              await complaint.save();
+              
+              await Vehicle.findByIdAndUpdate(vehicle._id, { currentTask: null });
+              
+              io.to('dashboard').emit('complaint_updated', complaint);
+            }
+          }
         }
 
         // Alerts
@@ -156,8 +177,8 @@ const startSimulation = (io) => {
         timestamp: new Date()
       });
 
-      // CCTV Alert Simulation (~1% chance per tick to keep demo lively but not overwhelming)
-      if (Math.random() < 0.01) {
+      // CCTV Alert Simulation (~15% chance per tick to keep demo lively)
+      if (Math.random() < 0.15) {
         const count = await Complaint.countDocuments();
         const cctvComp = await Complaint.create({
           complaintId: `CCTV${1000 + count + 1}`,

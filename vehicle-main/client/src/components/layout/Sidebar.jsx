@@ -27,10 +27,16 @@ export default function Sidebar({ collapsed, onToggle }) {
 
   const handleLogout = () => { logout(); navigate('/login'); };
 
-  const currentNavItems = user?.role === 'driver' ? [
-    { path: '/driver-portal', icon: '🚛', label: 'My Portal' },
-    { path: '/settings', icon: '⚙️', label: 'Settings' }
-  ] : navItems;
+  const currentNavItems = user?.role === 'driver' 
+    ? [
+        { path: '/driver-portal', icon: '🚛', label: 'My Portal' },
+        { path: '/settings', icon: '⚙️', label: 'Settings' }
+      ] 
+    : user?.role === 'admin'
+      ? navItems
+      : navItems.filter(item => 
+          ['/', '/tracking', '/routes', '/analytics', '/driver-ranking', '/complaints', '/settings'].includes(item.path)
+        );
 
   return (
     <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>

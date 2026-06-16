@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import useVehicleStore from '../store/useVehicleStore';
 import useAlertStore from '../store/useAlertStore';
+import useSocket from '../hooks/useSocket';
 import api from '../services/api';
 import { formatTimeAgo, getStatusColor, getVehicleIcon, getSeverityIcon, formatWeight, getWasteTypeIcon } from '../utils/formatters';
 import './DashboardPage.css';
@@ -12,15 +13,28 @@ const COLORS = ['#059669', '#10b981', '#0d9488', '#0ea5e9', '#f59e0b', '#ef4444'
 export default function DashboardPage() {
   const { vehicles, fetchVehicles, stats, fetchStats } = useVehicleStore();
   const { alerts, fetchAlerts, unacknowledgedCount } = useAlertStore();
+  const { socket } = useSocket();
   const [summary, setSummary] = useState(null);
   const [complaintStats, setComplaintStats] = useState(null);
+  const [recentComplaints, setRecentComplaints] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchVehicles(); fetchStats(); fetchAlerts();
     api.get('/reports/summary').then(r => setSummary(r.data)).catch(() => {});
     api.get('/complaints/stats').then(r => setComplaintStats(r.data.stats)).catch(() => {});
+    api.get('/complaints').then(r => setRecentComplaints(r.data.complaints.slice(0, 6))).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('new_complaint', (complaint) => {
+      setRecentComplaints((prev) => [complaint, ...prev].slice(0, 6));
+    });
+    return () => {
+      socket.off('new_complaint');
+    };
+  }, [socket]);
 
   const statusData = stats ? [
     { name: 'Active', value: stats.active, color: '#10b981' },
@@ -102,6 +116,15 @@ export default function DashboardPage() {
           <div className="alerts-list">
             {recentAlerts.length === 0 ? (<div className="empty-state"><span className="empty-state-icon">✅</span><span className="empty-state-text">No active alerts</span></div>) : (
               recentAlerts.map((alert) => (<div key={alert._id} className={`alert-item ${alert.severity}`}><div className="alert-icon">{getSeverityIcon(alert.severity)}</div><div><p className="alert-message">{alert.message}</p><span className="alert-time">{formatTimeAgo(alert.createdAt)}</span></div></div>))
+            )}
+          </div>
+        </div>
+
+        <div className="card alerts-card">
+          <div className="card-header"><h3 className="card-title">Recent Complaints</h3><span className="badge badge-warning">{recentComplaints.length} pending</span></div>
+          <div className="alerts-list">
+            {recentComplaints.length === 0 ? (<div className="empty-state"><span className="empty-state-icon">✅</span><span className="empty-state-text">No active complaints</span></div>) : (
+              recentComplaints.map((comp) => (<div key={comp._id} className="alert-item High" onClick={() => navigate('/complaints')} style={{ cursor: 'pointer' }}><div className="alert-icon">{comp.source === 'CCTV' ? '📷' : '👤'}</div><div><p className="alert-message"><strong>{comp.complaintId}</strong>: {comp.description}</p><span className="alert-time">{formatTimeAgo(comp.createdAt)} - {comp.zone}</span></div></div>))
             )}
           </div>
         </div>

@@ -14,6 +14,8 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const handleSave = () => { setSaved(true); setTimeout(() => setSaved(false), 2000); };
 
+  const isAdmin = user?.role === 'admin';
+
   return (
     <div className="settings-page">
       <h2>Settings</h2>
@@ -38,28 +40,34 @@ export default function SettingsPage() {
             </div>
           </div>
         </div>
-        <div className="card settings-card">
-          <h3 className="card-title">⚡ Alert Thresholds</h3>
-          <div className="settings-section">
-            <div className="input-group"><label className="input-label">Speed Limit (km/h)</label><input className="input" type="number" value={settings.speedLimit} onChange={(e)=>setSettings({...settings,speedLimit:+e.target.value})} /></div>
-            <div className="input-group"><label className="input-label">Overload Alert (%)</label><input className="input" type="number" value={settings.overloadAlert} onChange={(e)=>setSettings({...settings,overloadAlert:+e.target.value})} /></div>
-            <div className="input-group"><label className="input-label">Low Fuel Alert (%)</label><input className="input" type="number" value={settings.fuelAlert} onChange={(e)=>setSettings({...settings,fuelAlert:+e.target.value})} /></div>
-          </div>
-        </div>
-        <div className="card settings-card">
-          <h3 className="card-title">🔔 Notifications</h3>
-          <div className="settings-section">
-            {Object.entries(settings.notifications).map(([key,val])=>(
-              <div key={key} className="setting-row"><div><span className="setting-name">{key.replace(/([A-Z])/g,' $1').replace(/^./,s=>s.toUpperCase())}</span><span className="setting-desc">Alert for {key.replace(/([A-Z])/g,' $1').toLowerCase()}</span></div>
-              <button className={`toggle-switch ${val?'active':''}`} onClick={()=>setSettings({...settings,notifications:{...settings.notifications,[key]:!val}})}><span className="toggle-knob"></span></button></div>
-            ))}
-          </div>
-        </div>
+        {isAdmin && (
+          <>
+            <div className="card settings-card">
+              <h3 className="card-title">⚡ Alert Thresholds</h3>
+              <div className="settings-section">
+                <div className="input-group"><label className="input-label">Speed Limit (km/h)</label><input className="input" type="number" value={settings.speedLimit} onChange={(e)=>setSettings({...settings,speedLimit:+e.target.value})} /></div>
+                <div className="input-group"><label className="input-label">Overload Alert (%)</label><input className="input" type="number" value={settings.overloadAlert} onChange={(e)=>setSettings({...settings,overloadAlert:+e.target.value})} /></div>
+                <div className="input-group"><label className="input-label">Low Fuel Alert (%)</label><input className="input" type="number" value={settings.fuelAlert} onChange={(e)=>setSettings({...settings,fuelAlert:+e.target.value})} /></div>
+              </div>
+            </div>
+            <div className="card settings-card">
+              <h3 className="card-title">🔔 Notifications</h3>
+              <div className="settings-section">
+                {Object.entries(settings.notifications).map(([key,val])=>(
+                  <div key={key} className="setting-row"><div><span className="setting-name">{key.replace(/([A-Z])/g,' $1').replace(/^./,s=>s.toUpperCase())}</span><span className="setting-desc">Alert for {key.replace(/([A-Z])/g,' $1').toLowerCase()}</span></div>
+                  <button className={`toggle-switch ${val?'active':''}`} onClick={()=>setSettings({...settings,notifications:{...settings.notifications,[key]:!val}})}><span className="toggle-knob"></span></button></div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      <div className="settings-actions">
-        <button className="btn btn-primary" onClick={handleSave}>{saved ? '✅ Saved!' : 'Save Settings'}</button>
-        <button className="btn btn-secondary">Reset to Defaults</button>
-      </div>
+      {isAdmin && (
+        <div className="settings-actions">
+          <button className="btn btn-primary" onClick={handleSave}>{saved ? '✅ Saved!' : 'Save Settings'}</button>
+          <button className="btn btn-secondary">Reset to Defaults</button>
+        </div>
+      )}
     </div>
   );
 }

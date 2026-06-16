@@ -68,6 +68,13 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function AdminRoute({ children }) {
+  const { isAuthenticated, user } = useAuthStore();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role !== 'admin') return <Navigate to="/" replace />;
+  return children;
+}
+
 export default function App() {
   const { initTheme } = useThemeStore();
   useEffect(() => { initTheme(); }, []);
@@ -83,14 +90,14 @@ export default function App() {
           <Route path="/routes" element={<RouteMonitoringPage />} />
           <Route path="/analytics" element={<AnalyticsDashboardPage />} />
           <Route path="/vehicle/:id" element={<VehicleDetailsPage />} />
-          <Route path="/vehicles" element={<VehicleManagementPage />} />
-          <Route path="/drivers" element={<DriverManagementPage />} />
-          <Route path="/attendance" element={<AttendanceDashboardPage />} />
-          <Route path="/workforce" element={<DriverWorkforceDashboardPage />} />
-          <Route path="/driver-performance" element={<DriverPerformanceDashboardPage />} />
+          <Route path="/vehicles" element={<AdminRoute><VehicleManagementPage /></AdminRoute>} />
+          <Route path="/drivers" element={<AdminRoute><DriverManagementPage /></AdminRoute>} />
+          <Route path="/attendance" element={<AdminRoute><AttendanceDashboardPage /></AdminRoute>} />
+          <Route path="/workforce" element={<AdminRoute><DriverWorkforceDashboardPage /></AdminRoute>} />
+          <Route path="/driver-performance" element={<AdminRoute><DriverPerformanceDashboardPage /></AdminRoute>} />
           <Route path="/driver-ranking" element={<DriverRankingPage />} />
-          <Route path="/attendance-reports" element={<AttendanceReportsPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/attendance-reports" element={<AdminRoute><AttendanceReportsPage /></AdminRoute>} />
+          <Route path="/reports" element={<AdminRoute><ReportsPage /></AdminRoute>} />
           <Route path="/complaints" element={<ComplaintManagementPage />} />
           <Route path="/driver-portal" element={<DriverPortalPage />} />
           <Route path="/settings" element={<SettingsPage />} />
